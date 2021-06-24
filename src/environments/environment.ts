@@ -4,13 +4,17 @@
 
 export const environment = {
   production: false,
-  host:'http://localhost:3000',
+  host: 'http://localhost:3000',
   login: '/login',
 
   // user routes
   userDefault: '/user',
+  filterUsers: '/user/filter/',
   classDefault: '/class',
-  
+  subjectDefault: '/subject',
+  // dashboard data
+  adminDashboardData: '/dashboard/admin'
+
 };
 
 /*

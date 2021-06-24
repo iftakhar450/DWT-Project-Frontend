@@ -6,7 +6,7 @@
                     class="icon_menu"></i></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo">University <span class="lite">Admin</span></a>
+        <a href="index.html" class="logo">University <span class="lite">{{loginPerson}}</span></a>
         <!--logo end-->
 
         <div class="nav search-row" id="top_menu">
@@ -88,36 +88,30 @@
         <div id="sidebar" class="nav-collapse ">
             <!-- sidebar menu start-->
             <ul class="sidebar-menu">
-                <li class="active">
-                    <a class="" [routerLink]="['/admin']">
-                        <!-- <i class="icon_house_alt"></i> -->
-                        <i class="fa fa-desktop"></i>
-                        <span>Dashboard</span>
+                <li class="active" *ngFor="let n of navigations">
+                    <a class="" [routerLink]="[n.path]">
+                        <i [class]="n.icon"></i>
+                        <span>{{n.name}}</span>
                     </a>
                 </li>
-                <li class="sub-menu">
+                <!-- <li class="sub-menu">
                     <a href="javascript:;" class="" [routerLink]="['/admin/user']">
-                        <!-- <i class="icon_document_alt"></i> -->
-                        <i class="fa fa-users"></i>
-                        <!--  -->
+                        <i class=""></i>
                         <span>Users</span>
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;" class="" [routerLink]="['/admin/class']">
-                        <!-- <i class="icon_document_alt"></i> -->
-                        <i class="fa fa-laptop"></i>
+                        <i class=""></i>
                         <span>Classes</span>
-
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;" class="" [routerLink]="['/admin/subject']">
-                        <!-- <i class="icon_document_alt"></i> -->
-                        <i class="fa fa-book"></i>
+                        <i class=""></i>
                         <span>Subjects</span>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
             <!-- sidebar menu end-->
