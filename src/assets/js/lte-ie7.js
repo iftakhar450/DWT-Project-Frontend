@@ -365,7 +365,9 @@ window.onload = function() {
 			'icon_shield_alt' : '&#xe0d9;',
 			'icon_percent_alt' : '&#xe0da;',
 			'icon_globe_alt' : '&#xe0de;',
-			'icon_clipboard' : '&#xe0e6;'
+			'icon_clipboard' : '&#xe0e6;',
+			'icon_users' : '&#xe0e6;',
+
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, c, el;
