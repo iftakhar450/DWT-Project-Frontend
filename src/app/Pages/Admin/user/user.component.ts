@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.newUserForm = this.fb.group({
       name: ['', Validators.required],
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', Validators.compose([Validators.required])],
       mobile_no: ['', [Validators.required]],
       role: ['admin', [Validators.required]],
@@ -59,6 +59,9 @@ export class UserComponent implements OnInit {
         this.newUserClosebutton.nativeElement.click();
         this.app.showError('User Creating Error');
       })
+    } else {
+      console.log(this.newUserForm.value)
+      console.log('eee')
     }
   }
 

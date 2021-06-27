@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -9,9 +10,12 @@ export class NavigationComponent implements OnInit {
 
   navigations: any = [];
   loginPerson: any = 'Admin';
-  constructor() { }
+  name: any = '';
+  constructor(private router: Router) { }
 
   ngOnInit() {
+
+    this.name = JSON.parse(localStorage.getItem('user')).name;
     if (JSON.parse(localStorage.getItem('user')).role == 'admin') {
       this.navigations = [
         { name: 'Dashboard', path: '/admin', icon: 'fa fa-desktop' },
@@ -22,14 +26,25 @@ export class NavigationComponent implements OnInit {
       this.loginPerson = 'Admin';
     } else if (JSON.parse(localStorage.getItem('user')).role == 'student') {
       this.navigations = [
-        { name: 'Dashboard', path: '/student', icon: 'fa fa-desktop' },
-        { name: 'Subjects', path: '/student/subject', icon: 'fa fa-book' },
+        { name: 'Dashboard', path: '/students', icon: 'fa fa-desktop' },
+        { name: 'Subjects', path: '/students/subject', icon: 'fa fa-book' },
         // { name: 'Profile', path: '/student/subject', icon: 'fa fa-book' }
       ]
       this.loginPerson = 'Student';
     } else {
+      this.navigations = [
+        { name: 'Dashboard', path: '/teachers', icon: 'fa fa-desktop' },
+        { name: 'Subjects', path: '/teachers/subject', icon: 'fa fa-book' },
+        { name: 'Manage Test', path: '/teachers/test', icon: 'fa fa-cubes' },
+      ]
       this.loginPerson = 'Teacher';
     }
+  }
+
+  // logOutUser
+  logOutUser() {
+    localStorage.clear();
+    this.router.navigate(['/login'],  { replaceUrl: true });
   }
 
 }

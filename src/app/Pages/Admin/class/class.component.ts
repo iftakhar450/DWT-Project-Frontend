@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { MainService } from 'src/app/Services/main.service';
 import { environment } from 'src/environments/environment';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-class',
   templateUrl: './class.component.html',
@@ -14,6 +15,21 @@ export class ClassComponent implements OnInit {
 
   allClass: any[];
   selectedClass: any = {};
+
+  dropdownList = [];
+  selectedItems = [];
+
+  dropdownSettings: IDropdownSettings = {
+    singleSelection: false,
+    idField: '_id',
+    textField: 'name',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+    
+  };
+
   @ViewChild('newClassClosebutton', { static: true }) newClassClosebutton;
   @ViewChild('deleteClassClosebutton', { static: true }) deleteClassClosebutton;
   @ViewChild('updateClassClosebutton', { static: true }) updateClassClosebutton;
@@ -24,12 +40,32 @@ export class ClassComponent implements OnInit {
   ngOnInit() {
     this.newClassForm = this.fb.group({
       name: ['', Validators.required],
-    });
+      students: [],
 
+    });
     // 
     this.getAllClass();
+    this.getAllStudents();
   }
 
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+  // get students list
+
+  getAllStudents() {
+    let url = environment.filterUsers + 'student'
+    this.mainService.get(url).subscribe(res => {
+      // console.log(res.users)
+      this.dropdownList = res.users;
+    }, error => {
+
+    })
+  }
   // get Class list
   getAllClass() {
     this.mainService.get(environment.classDefault).subscribe(res => {
@@ -41,6 +77,7 @@ export class ClassComponent implements OnInit {
   }
   // save Class
   saveClass() {
+    console.log(this.newClassForm.value)
     this.newClassForm.markAllAsTouched();
     if (this.newClassForm.valid) {
       this.mainService.post(environment.classDefault, this.newClassForm.value).subscribe(res => {
@@ -59,6 +96,8 @@ export class ClassComponent implements OnInit {
 
   // updateClass info
   updateClass() {
+
+    console.log(this.selectedClass)
     let url = environment.classDefault + '/' + this.selectedClass._id;
     this.mainService.update(url, this.selectedClass).subscribe(res => {
       this.app.showSuccess(res.msg);
@@ -71,7 +110,9 @@ export class ClassComponent implements OnInit {
   }
   // deleteOpenModal
   updateSelectedClass(id) {
+      console.log(this.allClass)
     this.selectedClass = this.allClass.filter(u => u._id === id)[0];
+    console.log(this.selectedClass)
   }
 
   // confirmDelete

@@ -7,13 +7,17 @@ export const environment = {
   host: 'http://localhost:3000',
   login: '/login',
 
-  // user routes
+  // all default routes
   userDefault: '/user',
   filterUsers: '/user/filter/',
   classDefault: '/class',
   subjectDefault: '/subject',
+  testDefault: '/test',
   // dashboard data
-  adminDashboardData: '/dashboard/admin'
+  adminDashboardData: '/dashboard/admin',
+
+  //subject
+  getTeacherSubject: '/subject/teacher/'
 
 };
 
