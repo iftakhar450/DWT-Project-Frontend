@@ -20,6 +20,12 @@ import { TeacherSubjectViewComponent } from './Pages/Teacher/teacher-subject-vie
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { StudentSubjectViewComponent } from './Pages/Student/student-subject-view/student-subject-view.component';
 import { TestManagementComponent } from './Pages/Teacher/test-management/test-management.component';
+import { TestMarkcheetComponent } from './Pages/Teacher/test-markcheet/test-markcheet.component';
+import { DateformatPipe } from './Pipes/dateformat.pipe';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
+import { ProfileComponent } from './Pages/profile/profile.component';
+import { StudentResultComponent } from './Pages/Student/student-result/student-result.component';
+import { ChatComponent } from './Pages/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +39,17 @@ import { TestManagementComponent } from './Pages/Teacher/test-management/test-ma
     NavigationComponent,
     TeacherSubjectViewComponent,
     StudentSubjectViewComponent,
-    TestManagementComponent
+    TestManagementComponent,
+    TestMarkcheetComponent,
+    StudentResultComponent,
+    // pipes
+    DateformatPipe,
+
+    ProfileComponent,
+
+    ChatComponent,
+
+    
   ],
   imports: [
     BrowserModule,
@@ -44,6 +60,7 @@ import { TestManagementComponent } from './Pages/Teacher/test-management/test-ma
     HttpClientModule,
     ToastrModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
+    NgxCsvParserModule 
   ],
   providers: [ToastrService, AuthGuard ],
   bootstrap: [AppComponent]

@@ -1,0 +1,126 @@
+<!-- container section start -->
+<section id="container" class="">
+    <!--main content start-->
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-user-md"></i> Profile</h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
+                    <li><i class="fa fa-user-md"></i>Profile</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <!-- profile-widget -->
+            <div class="col-lg-12">
+                <div class="profile-widget profile-widget-info">
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-sm-2" *ngIf="user">
+                            <h4>{{user.name}}</h4>
+                            <div class="follow-ava">
+                                <img src="./../../../assets/img/profile.png" alt="">
+                            </div>
+                            <h6 style="text-transform: capitalize;">{{user.role}}</h6>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 follow-info">
+                            <p *ngIf="user"><strong>Username :</strong> {{user.username}}</p>
+                            <p *ngIf="user"><i class="fa fa-mobile"> &nbsp;{{user.mobile_no}}</i></p>
+                            <p *ngIf="user.class"><strong>Classs :</strong> {{user.class.name}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page start-->
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading tab-bg-info">
+                        <ul class="nav nav-tabs">
+                            <li class="" style="border: solid 1px white;margin-bottom: 5px;">
+                                <a data-toggle="tab" style="margin-right: 0px;" href="#edit-profile">
+                                    <!-- <i class="icon-envelope"></i> -->
+                                    Edit Profile
+                                </a>
+                            </li>
+                        </ul>
+                    </header>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <!-- edit-profile -->
+                            <div id="edit-profile" class="tab-pane">
+                                <section class="panel">
+                                    <div class="panel-body bio-graph-info">
+                                        <h1> Profile Info</h1>
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Name</label>
+                                                <div class="col-lg-6" *ngIf="user">
+                                                    <input type="text" [(ngModel)]="user.name"
+                                                        [ngModelOptions]="{standalone: true}" class="form-control"
+                                                        id="f-name" placeholder=" ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" *ngIf="user.role == 'student'">
+                                                <label class="col-lg-2 control-label">Class</label>
+                                                <div class="col-lg-6" *ngIf="user.class">
+                                                    <input type="text" [(ngModel)]="user.class.name"
+                                                        [ngModelOptions]="{standalone: true}" class="form-control"
+                                                        id="f-name" placeholder="" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Username</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" [(ngModel)]="user.username" class="form-control"
+                                                        [ngModelOptions]="{standalone: true}" id="l-name"
+                                                        placeholder=" " readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Password</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" [(ngModel)]="user.password" class="form-control"
+                                                        [ngModelOptions]="{standalone: true}" id="c-name"
+                                                        placeholder=" ">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Role</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" [(ngModel)]="user.role" class="form-control"
+                                                        [ngModelOptions]="{standalone: true}" id="b-day" placeholder=" "
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Mobile</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" [(ngModel)]="user.mobile_no" class="form-control"
+                                                        [ngModelOptions]="{standalone: true}" id="mobile"
+                                                        placeholder=" ">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" (click)="saveUserInfo()"
+                                                        class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- page end-->
+    </section>
+</section>

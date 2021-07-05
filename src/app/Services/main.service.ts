@@ -11,8 +11,8 @@ export class MainService {
   constructor(private http: HttpClient) { }
   // Post method 
   post(url, data) {
-    console.log(this.host)
-    console.log(data)
+    console.log(this.host + url)
+    // console.log(data)
     return this.http.post<any>(this.host + url, data);
 
   }
@@ -24,6 +24,8 @@ export class MainService {
 
   //Update method
   update(url, data) {
+
+    console.log(this.host + url)
     return this.http.put<any>(this.host + url, data);
 
   }

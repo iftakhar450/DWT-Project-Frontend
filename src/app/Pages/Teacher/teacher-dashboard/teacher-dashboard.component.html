@@ -15,11 +15,19 @@
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
             <div class="info-box dark-bg">
                 <i class="fa fa-book"></i>
-                <div class="count">4</div>
+                <div class="count" *ngIf="allSubjects">{{allSubjects.length}}</div>
                 <div class="title">Subjects</div>
             </div>
             <!--/.info-box-->
         </div>
-        <!--/.col-->
+        
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+                <i class="fa fa-file"></i>
+                <div class="count" *ngIf="allTests">{{allTests.length}}</div>
+                <div class="title">Tests</div>
+            </div>
+            <!--/.info-box-->
+        </div>
     </div>
 </section>

@@ -17,9 +17,11 @@ export class SubjectComponent implements OnInit {
   allTeachers: any[];
   allClasses: any[];
   selectedSubject: any = {};
+  isArchive: any;
   @ViewChild('newSubjectClosebutton', { static: true }) newSubjectClosebutton;
   @ViewChild('deleteSubjectClosebutton', { static: true }) deleteSubjectClosebutton;
   @ViewChild('updateSubjectClosebutton', { static: true }) updateSubjectClosebutton;
+  @ViewChild('archiveSubjectClosebutton', { static: true }) archiveSubjectClosebutton;
   constructor(private fb: FormBuilder, private mainService: MainService, private app: AppComponent) {
 
   }
@@ -81,18 +83,20 @@ export class SubjectComponent implements OnInit {
         this.newSubjectClosebutton.nativeElement.click();
         this.app.showError(error.error.msg);
       })
-    } 
+    }
   }
 
   // updateSubject info
   updateSubject() {
     let url = environment.subjectDefault + '/' + this.selectedSubject._id;
+    // console.log(this.selectedSubject.teacher);
     this.mainService.update(url, this.selectedSubject).subscribe(res => {
       this.app.showSuccess(res.msg);
       this.updateSubjectClosebutton.nativeElement.click();
       this.getAllSubject();
     }, error => {
       this.updateSubjectClosebutton.nativeElement.click();
+      console.log(error);
       this.app.showError('Something went wrong')
     })
   }
@@ -100,6 +104,7 @@ export class SubjectComponent implements OnInit {
   updateSelectedSubject(id) {
     // console.log(id)
     this.selectedSubject = this.allSubject.filter(u => u._id === id)[0];
+    console.log(this.selectedSubject);
   }
 
   // confirmDelete
@@ -115,4 +120,30 @@ export class SubjectComponent implements OnInit {
     })
   }
 
+
+  archiveSubjectClick(d, id) {
+    this.updateSelectedSubject(id);
+    this.isArchive = d;
+  }
+
+  archiveThisSubject() {
+    let url = environment.archiveSubject + this.selectedSubject._id;
+
+    console.log(this.isArchive)
+    this.mainService.post(url, { isArchive: this.isArchive }).subscribe(res => {
+      this.app.showSuccess(res.msg);
+      this.getAllSubject();
+      this.archiveSubjectClosebutton.nativeElement.click();
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  compareFn = this._compareFn.bind(this);
+  _compareFn(a, b) {
+    // console.log(a)
+    // console.log(b._id)
+    if (a && b)
+      return a._id == b._id;
+  }
 }

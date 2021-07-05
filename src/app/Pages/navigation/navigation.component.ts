@@ -11,6 +11,8 @@ export class NavigationComponent implements OnInit {
   navigations: any = [];
   loginPerson: any = 'Admin';
   name: any = '';
+  profileRoute: any = '/admin/profile';
+  chatRoute: any = '/admin/chat';
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -23,13 +25,17 @@ export class NavigationComponent implements OnInit {
         { name: 'Classes', path: '/admin/class', icon: 'fa fa-laptop' },
         { name: 'Subjects', path: '/admin/subject', icon: 'fa fa-book' }
       ]
+      this.profileRoute = '/admin/profile';
+      this.chatRoute =  '/admin/chat'
       this.loginPerson = 'Admin';
     } else if (JSON.parse(localStorage.getItem('user')).role == 'student') {
       this.navigations = [
         { name: 'Dashboard', path: '/students', icon: 'fa fa-desktop' },
         { name: 'Subjects', path: '/students/subject', icon: 'fa fa-book' },
-        // { name: 'Profile', path: '/student/subject', icon: 'fa fa-book' }
+        { name: 'Results', path: '/students/result', icon: 'icon_piechart' }
       ]
+      this.profileRoute = '/students/profile';
+      this.chatRoute =  '/students/chat'
       this.loginPerson = 'Student';
     } else {
       this.navigations = [
@@ -37,14 +43,16 @@ export class NavigationComponent implements OnInit {
         { name: 'Subjects', path: '/teachers/subject', icon: 'fa fa-book' },
         { name: 'Manage Test', path: '/teachers/test', icon: 'fa fa-cubes' },
       ]
+      this.profileRoute = '/teachers/profile';
       this.loginPerson = 'Teacher';
+      this.chatRoute =  '/teachers/chat'
     }
   }
 
   // logOutUser
   logOutUser() {
     localStorage.clear();
-    this.router.navigate(['/login'],  { replaceUrl: true });
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 
 }

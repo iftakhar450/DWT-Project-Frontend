@@ -17,23 +17,21 @@
                     <tbody>
                         <tr>
                             <th>ID</th>
-                            <th>Titlte</th>
+                            <th>Title</th>
                             <th>Class</th>
                             <th>No Of Students</th>
-                            <th style="text-align: right;">Action</th>
+                            <!-- <th style="text-align: right;">Action</th> -->
                         </tr>
                         <tr *ngFor="let sb of allSubjects">
                             <td>{{sb.s_id}}</td>
                             <td>{{sb.title}}</td>
                             <td>{{sb.class.name}}</td>
                             <td>{{sb.class.students.length}}</td>
-                            <td style="text-align: right;">
+                            <!-- <td style="text-align: right;">
                                 <div class="btn-group">
                                     <a class="btn btn-success" ><i class="fa fa-th" title="View list of Students registerd in this course"></i></a>
-                                    <!-- <a class="btn btn-danger" data-toggle="modal" (click)="updateSelectedUser(u._id)"
-                                        data-target="#deleteUserConfirmModal"><i class="icon_close_alt2"></i></a> -->
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </table>

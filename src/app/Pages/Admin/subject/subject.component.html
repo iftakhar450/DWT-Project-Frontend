@@ -28,6 +28,7 @@
                             <th>ID</th>
                             <th>Class</th>
                             <th>Teacher</th>
+                            <th>Archive</th>
                             <th style="text-align: right;">Action</th>
                         </tr>
                         <tr *ngFor="let s of allSubject">
@@ -35,13 +36,27 @@
                             <td>{{s.s_id}}</td>
                             <td>{{s.class.name}}</td>
                             <td>{{s.teacher.name}}</td>
+                            <td *ngIf="s.is_archive == 'n' || !s.is_archive">
+                                <button class="btn btn-info" style="width: 100px;" data-toggle="modal"
+                                    data-target="#archiveSubjectConfirmModal"
+                                    (click)="archiveSubjectClick('y', s._id)">Archived</button>
+                            </td>
+                            <td *ngIf="s.is_archive == 'y'">
+                                <button class="btn btn-info" style="width: 100px;" data-toggle="modal"
+                                    data-target="#archiveSubjectConfirmModal"
+                                    (click)="archiveSubjectClick('n', s._id)">Un-Archived</button>
+                            </td>
                             <td style="text-align: right;">
                                 <div class="btn-group">
-                                    <a class="btn btn-success" data-toggle="modal"
+                                    <a class="btn btn-success" data-toggle="modal" title="Edit this Subject"
                                         (click)="updateSelectedSubject(s._id)" data-target="#updateSubjectModal"><i
                                             class="fa fa-edit"></i></a>
                                     <a class="btn btn-danger" data-toggle="modal" (click)="updateSelectedSubject(s._id)"
-                                        data-target="#deleteSubjectConfirmModal"><i class="icon_close_alt2"></i></a>
+                                        title="Delete this Subject" data-target="#deleteSubjectConfirmModal"><i
+                                            class="icon_close_alt2"></i></a>
+                                    <!-- <a class="btn btn-primary" data-toggle="modal" title="Archive this Subject"
+                                        (click)="updateSelectedSubject(s._id)"
+                                        data-target="#archiveSubjectConfirmModal"><i class="fa fa-archive"></i></a> -->
                                 </div>
                             </td>
                         </tr>
@@ -99,7 +114,7 @@
                                         </select>
                                         <span class="text-danger"
                                             *ngIf="(newSubjectForm.controls.teacher.touched || submitted) && newSubjectForm.controls.teacher.errors?.required">
-                                            Teacher  is required
+                                            Teacher is required
                                         </span>
                                     </div>
                                 </div>
@@ -111,7 +126,7 @@
                                         </select>
                                         <span class="text-danger"
                                             *ngIf="(newSubjectForm.controls.class.touched || submitted) && newSubjectForm.controls.class.errors?.required">
-                                            Class  is required
+                                            Class is required
                                         </span>
                                     </div>
                                 </div>
@@ -146,19 +161,58 @@
                     <div class="col-lg-12">
                         <div class="form">
                             <div class="form-group ">
-                                <label for="fullname" class="control-label col-lg-3">Full name <span
+                                <label for="fullname" class="control-label col-lg-3">Subject ID <span
                                         class="required">*</span></label>
                                 <div class="col-lg-9">
-                                    <input type="text" [(ngModel)]="selectedSubject.name" class="form-control">
-
+                                    <input type="text" class="form-control" [(ngModel)]="selectedSubject.s_id">
+                                    <!-- <span class="text-danger"
+                                        *ngIf="(newSubjectForm.controls.s_id.touched || submitted) && newSubjectForm.controls.s_id.errors?.required">
+                                        Subject is required
+                                    </span> -->
                                 </div>
                             </div>
+                            <br>
+                            <br>
+                            <br>
                             <div class="form-group ">
-                                <label for="mobile" class="control-label col-lg-3">Mobile no <span
+                                <label for="fullname" class="control-label col-lg-3">Title <span
                                         class="required">*</span></label>
                                 <div class="col-lg-9">
-                                    <input class=" form-control" [(ngModel)]="selectedSubject.mobile_no" id="address"
-                                        name="address" type="text" />
+                                    <input type="text" class="form-control" [(ngModel)]="selectedSubject.title">
+                                    <!-- <span class="text-danger"
+                                        *ngIf="(newSubjectForm.controls.title.touched || submitted) && newSubjectForm.controls.title.errors?.required">
+                                        Subject title is required
+                                    </span> -->
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-group ">
+                                <label for="role" class="control-label col-lg-3">Select Teacher</label>
+                                <div class="col-lg-9">
+                                    <select id="role" class="form-control" [(ngModel)]="selectedSubject.teacher"
+                                        [compareWith]="compareFn">
+                                        <option [ngValue]="t" *ngFor="let t of allTeachers">{{t.name}}</option>
+                                    </select>
+                                    <!-- <span class="text-danger"
+                                        *ngIf="(newSubjectForm.controls.teacher.touched || submitted) && newSubjectForm.controls.teacher.errors?.required">
+                                        Teacher is required
+                                    </span> -->
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-group ">
+                                <label for="role" class="control-label col-lg-3">Select Class</label>
+                                <div class="col-lg-9">
+                                    <select id="role" class="form-control" [(ngModel)]="selectedSubject.class"
+                                        [compareWith]="compareFn">
+                                        <option [ngValue]="c" *ngFor="let c of allClasses">{{c.name}}</option>
+                                    </select>
+                                    <!-- <span class="text-danger"
+                                        *ngIf="(newSubjectForm.controls.class.touched || submitted) && newSubjectForm.controls.class.errors?.required">
+                                        Class is required
+                                    </span> -->
                                 </div>
                             </div>
                         </div>
@@ -182,12 +236,33 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                Are you sure to delete "{{selectedSubject.name}}"
+                Are you sure to delete "{{selectedSubject.title}}"
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" #deleteSubjectClosebutton
                     data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Archive Subject confirmation Modal -->
+<div class="modal fade" id="archiveSubjectConfirmModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Are you sure to Archive "{{selectedSubject.title}}"
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" #archiveSubjectClosebutton
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" (click)="archiveThisSubject()">
+                    <span *ngIf="isArchive == 'y'"> Archive</span>
+                    <span *ngIf="isArchive=='n'"> Un-Archive</span>
+                </button>
             </div>
         </div>
     </div>

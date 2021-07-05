@@ -1,0 +1,161 @@
+<!-- container section start -->
+<section id="container" class="">
+    <!--main content start-->
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-envelope"></i> Chat</h3>
+                <ol class="breadcrumb">
+                    <li><i class="fa fa-home"></i><a style="color: #007aff;" href="index.html">Home</a></li>
+                    <li><i class="fa fa-envelope"></i>Chat</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <div class="messaging">
+                        <div class="inbox_msg">
+                            <div class="inbox_people">
+                                <div class="headind_srch">
+                                    <div class="recent_heading">
+                                        <h4>Inbox</h4>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="row">
+                                        <ul class="nav nav-tabs">
+                                            <li [ngClass]=" {'active': chat_option === 'std'}"><a
+                                                    (click)="chatOptionClick('std')">Students</a></li>
+                                            <li [ngClass]=" {'active': chat_option === 'tec'}"><a
+                                                    (click)="chatOptionClick('tec')">Teachers</a></li>
+                                            <li [ngClass]=" {'active': chat_option === 'grup'}"><a
+                                                    (click)="chatOptionClick('grup')">Group Chat</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- students box -->
+                                <div class="inbox_chat" *ngIf="chat_option == 'std'">
+                                    <!-- <div class="chat_list active_chat" style="cursor: pointer;">
+                                        <div class="chat_people">
+                                            <div class="chat_img"> <img src="/../../../assets/img/profile.png"
+                                                    alt="sunil">
+                                            </div>
+                                            <div class="chat_ib">
+                                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                                <p>Test, which is a new approach to have all solutions
+                                                    astrology under one roof.</p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <label *ngIf="students.length  == 0"
+                                        style="width: 100%;text-align: center;margin-top: 30%;">No user available in
+                                        your chat list</label>
+                                    <div class="chat_list" style="cursor: pointer;" *ngFor="let s of students"
+                                        (click)="chatListClick(s)">
+                                        <div class="chat_people">
+                                            <div class="chat_img"> <img src="/../../../assets/img/profile.png"
+                                                    alt="sunil">
+                                            </div>
+                                            <div class="chat_ib">
+                                                <h5>{{s.name}} <span class="chat_date"></span></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- teacher box -->
+                                <div class="inbox_chat" *ngIf="chat_option == 'tec'">
+                                    <label *ngIf="teachers.length  == 0"
+                                        style="width: 100%;text-align: center;margin-top: 30%;">No user available in
+                                        your chat list</label>
+                                    <div class="chat_list" style="cursor: pointer;" *ngFor="let t of teachers"
+                                        (click)="chatListClick(t)">
+                                        <div class="chat_people">
+                                            <div class="chat_img"> <img src="/../../../assets/img/profile.png"
+                                                    alt="sunil">
+                                            </div>
+                                            <div class="chat_ib">
+                                                <h5>{{t.name}} <span class="chat_date"></span></h5>
+                                                <!-- <p>Test, which is a new approach to have all solutions
+                                                    astrology under one roof.</p> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Groups box -->
+                                <div class="inbox_chat" *ngIf="chat_option == 'grup'">
+                                    <div class="form-group ">
+                                        <label for="fullname" class="control-label col-lg-3">
+                                            <!-- Add Students <span class="required"></span> -->
+                                        </label>
+                                        <div class="col-lg-12">
+                                            <ng-multiselect-dropdown [placeholder]="'Add Receivers here'"
+                                                [settings]="dropdownSettings" [data]="userForGroupChat"
+                                                [(ngModel)]="selectedForGroupChat" (onSelect)="onItemSelect($event)"
+                                                (onSelectAll)="onSelectAll($event)"
+                                                (onDeSelect)="onItemDeSelect($event)"
+                                                (onDeSelectAll)="onDeSelectAll($event)">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                    <label style="width: 100%;text-align: center;margin-top: 30%;padding: 10%;">
+                                        "Add Users" from the Dropdown to send message multilple users</label>
+                                </div>
+                            </div>
+
+                            <div class="mesgs" *ngIf="!isChatBoxShow">
+                                <div class="msg_history">
+                                    <label
+                                        style="font-weight: bold; width: 100%;text-align: center;margin-top: 20%;">Please
+                                        select the user form chat list to view and send message</label>
+                                </div>
+                            </div>
+                            <div class="mesgs" *ngIf="isChatBoxShow">
+                                <div class="msg_history">
+                                    <div
+                                        style="width: 100%;background-color: #394a59;color: white;padding: 10px;margin-bottom: 10px;">
+                                        <h4 style="margin: 0px; width: 100%;text-align: center;">{{receiver.name}}</h4>
+                                        <h4 style="margin: 0px; width: 100%;text-align: center;" *ngIf="selectedForGroupChat.length > 0">Group Chat</h4>
+                                    </div>
+                                    <div *ngFor="let ch of chat" style="padding-left: 10px;padding-right: 10px;">
+                                        <div class="incoming_msg" *ngIf="ch.sender == user_id">
+                                            <div class="incoming_msg_img"> <img src="./../../../assets/img/profile.png"
+                                                    alt="sunil">
+                                            </div>
+                                            <div class="received_msg">
+                                                <div class="received_withd_msg">
+                                                    <p> {{ch.text}}</p>
+                                                    <span class="time_date"> {{ch.createdAt | dateformat}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="outgoing_msg" *ngIf="ch.receiver == user_id">
+                                            <div class="sent_msg">
+                                                <p>{{ch.text}}</p>
+                                                <span class="time_date">{{ch.createdAt | dateformat}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="type_msg">
+                                    <div class="input_msg_write">
+                                        <input type="text" class="write_msg" style="padding-left:10px"
+                                            [(ngModel)]="message" placeholder="Type a message" />
+                                        <button class="msg_send_btn" type="button" (click)="sendMessage()"><i
+                                                class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- page start-->
+        <!-- page end-->
+    </section>
+</section>
