@@ -9,8 +9,8 @@ import { DashboardComponent } from './Pages/Admin/dashboard/dashboard.component'
 import { TeacherDashboardComponent } from './Pages/Teacher/teacher-dashboard/teacher-dashboard.component';
 import { StudentDashboardComponent } from './Pages/Student/student-dashboard/student-dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { ToastrModule ,ToastrService } from 'ngx-toastr';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { AuthGuard } from './auth/auth.guard';
 import { ClassComponent } from './Pages/Admin/class/class.component';
 import { SubjectComponent } from './Pages/Admin/subject/subject.component';
@@ -49,7 +49,7 @@ import { ChatComponent } from './Pages/chat/chat.component';
 
     ChatComponent,
 
-    
+
   ],
   imports: [
     BrowserModule,
@@ -60,9 +60,9 @@ import { ChatComponent } from './Pages/chat/chat.component';
     HttpClientModule,
     ToastrModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
-    NgxCsvParserModule 
+    NgxCsvParserModule
   ],
-  providers: [ToastrService, AuthGuard ],
+  providers: [ToastrService,  AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

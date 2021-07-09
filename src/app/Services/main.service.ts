@@ -11,27 +11,34 @@ export class MainService {
   constructor(private http: HttpClient) { }
   // Post method 
   post(url, data) {
-    console.log(this.host + url)
-    // console.log(data)
-    return this.http.post<any>(this.host + url, data);
+    if (url == '/login') {
+      return this.http.post<any>(this.host + url, data);
+    } else {
+      const headers = { 'authorization': JSON.parse(localStorage.getItem('user')).token ? JSON.parse(localStorage.getItem('user')).token : '' }
+      // console.log(headers)
+      return this.http.post<any>(this.host + url, data, { headers: headers });
+    }
+
 
   }
 
   // Get method 
   get(url) {
-    return this.http.get<any>(this.host + url);
+    const headers = { 'authorization': JSON.parse(localStorage.getItem('user')).token }
+    return this.http.get<any>(this.host + url, { 'headers': headers });
   }
 
   //Update method
   update(url, data) {
-
+    const headers = { 'authorization': JSON.parse(localStorage.getItem('user')).token }
     console.log(this.host + url)
-    return this.http.put<any>(this.host + url, data);
+    return this.http.put<any>(this.host + url, data, { 'headers': headers });
 
   }
 
   // Delete method
   delete(url) {
-    return this.http.delete<any>(this.host + url);
+    const headers = { 'authorization': JSON.parse(localStorage.getItem('user')).token }
+    return this.http.delete<any>(this.host + url, { 'headers': headers });
   }
 }

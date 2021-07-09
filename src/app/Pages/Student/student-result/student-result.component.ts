@@ -25,7 +25,7 @@ export class StudentResultComponent implements OnInit {
   ngOnInit() {
     this.student_id = JSON.parse(localStorage.getItem('user'))._id;
     this.class_id = JSON.parse(localStorage.getItem('user')).class_is;
-    this.getStudentResult()
+    // 
     this.studentSubject();
   }
 
@@ -46,6 +46,7 @@ export class StudentResultComponent implements OnInit {
     this.mainService.get(url).subscribe(res => {
       // console.log(res.subjects)
       if (res.subjects.length > 0) {
+        this.getStudentResult()
         this.allSubject = this.groupById(res.subjects, '_id')
         // console.log(this.allSubject);
         this.calulateTotalAverage();
@@ -66,6 +67,7 @@ export class StudentResultComponent implements OnInit {
 
 
   getSubjectProp(id, pro) {
+    console.log(this.allSubject)
     if (this.allSubject && this.allSubject[id]) {
       return this.allSubject[id][0][pro]
     } else {

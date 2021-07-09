@@ -27,7 +27,8 @@
                                         <ul class="nav nav-tabs">
                                             <li [ngClass]=" {'active': chat_option === 'std'}"><a
                                                     (click)="chatOptionClick('std')">Students</a></li>
-                                            <li [ngClass]=" {'active': chat_option === 'tec'}"><a
+                                            <li [ngClass]=" {'active': chat_option === 'tec'}"
+                                                *ngIf="user_role != 'teacher'"><a
                                                     (click)="chatOptionClick('tec')">Teachers</a></li>
                                             <li [ngClass]=" {'active': chat_option === 'grup'}"><a
                                                     (click)="chatOptionClick('grup')">Group Chat</a></li>
@@ -65,7 +66,7 @@
                                     </div>
                                 </div>
                                 <!-- teacher box -->
-                                <div class="inbox_chat" *ngIf="chat_option == 'tec'">
+                                <div class="inbox_chat" *ngIf="chat_option == 'tec' ">
                                     <label *ngIf="teachers.length  == 0"
                                         style="width: 100%;text-align: center;margin-top: 30%;">No user available in
                                         your chat list</label>
@@ -112,11 +113,12 @@
                                 </div>
                             </div>
                             <div class="mesgs" *ngIf="isChatBoxShow">
-                                <div class="msg_history">
+                                <div class="msg_history" #scrollMe (scroll)="onScroll()">
                                     <div
                                         style="width: 100%;background-color: #394a59;color: white;padding: 10px;margin-bottom: 10px;">
                                         <h4 style="margin: 0px; width: 100%;text-align: center;">{{receiver.name}}</h4>
-                                        <h4 style="margin: 0px; width: 100%;text-align: center;" *ngIf="selectedForGroupChat.length > 0">Group Chat</h4>
+                                        <h4 style="margin: 0px; width: 100%;text-align: center;"
+                                            *ngIf="selectedForGroupChat.length > 0">Group Chat</h4>
                                     </div>
                                     <div *ngFor="let ch of chat" style="padding-left: 10px;padding-right: 10px;">
                                         <div class="incoming_msg" *ngIf="ch.sender == user_id">

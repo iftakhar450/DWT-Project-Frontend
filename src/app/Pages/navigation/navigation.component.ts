@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
+import { MainService } from 'src/app/Services/main.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navigation',
@@ -13,11 +16,14 @@ export class NavigationComponent implements OnInit {
   name: any = '';
   profileRoute: any = '/admin/profile';
   chatRoute: any = '/admin/chat';
-  constructor(private router: Router) { }
+
+  user_id: any;
+  constructor(private router: Router, private mainService: MainService, private app: AppComponent) { }
 
   ngOnInit() {
 
     this.name = JSON.parse(localStorage.getItem('user')).name;
+    this.user_id = JSON.parse(localStorage.getItem('user'))._id;
     if (JSON.parse(localStorage.getItem('user')).role == 'admin') {
       this.navigations = [
         { name: 'Dashboard', path: '/admin', icon: 'fa fa-desktop' },
@@ -47,12 +53,26 @@ export class NavigationComponent implements OnInit {
       this.loginPerson = 'Teacher';
       this.chatRoute =  '/teachers/chat'
     }
+    this.checkIfNewMessageExsist();
   }
 
   // logOutUser
   logOutUser() {
     localStorage.clear();
     this.router.navigate(['/login'], { replaceUrl: true });
+  }
+
+
+  checkIfNewMessageExsist() {
+    let url = environment.checkIfNewMessage + this.user_id;
+    this.mainService.get(url).subscribe(res => {
+      console.log(res);
+      if(res.msg) {
+        this.app.showInfo('You have new message')
+      }
+    }, error => {
+      console.log(error);
+    })
   }
 
 }

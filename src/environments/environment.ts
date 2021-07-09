@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'http://192.168.1.102:3000',
+  // host: 'http://192.168.1.102:3000',
+  host: 'http://localhost:3000',
   login: '/login',
 
   // all default routes
@@ -13,8 +14,8 @@ export const environment = {
   classDefault: '/class',
   subjectDefault: '/subject',
   testDefault: '/test',
-  chatDefault:'/message',
-  chatInGroupDefault:'/message/group',
+  chatDefault: '/message',
+  chatInGroupDefault: '/message/group',
 
   // dashboard data
   adminDashboardData: '/dashboard/admin',
@@ -33,12 +34,14 @@ export const environment = {
   updateMultipleTestResult: '/test/result',
   updateSingleTestResult: '/test/singleresult',
   getTestForStudent: '/test/student',
-  studentSubjectDetail:'/testresult/subject',
+  studentSubjectDetail: '/testresult/subject',
   studentResultCard: '/test/result/card/',
   // chat
- 
-  filterStudentChatMembers :'/chat/menbers/student/',
-  loadChat:'/load/message',
+
+  filterStudentChatMembers: '/chat/members/student/',
+  filterTeacherChatMembers: '/chat/members/teacher/',
+  loadChat: '/load/message',
+  checkIfNewMessage: '/message/check/'
 
 
 

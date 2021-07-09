@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/teachers']);
         }
       }, error => {
+        console.log(error)
         this.app.showError(error.error)
       })
     } else {

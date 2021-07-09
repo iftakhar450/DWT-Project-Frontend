@@ -30,7 +30,7 @@
                                 <label *ngIf="user">Name: &nbsp; <strong>{{user.name}}</strong></label>
                             </div>
                             <div class="col-lg-12">
-                                <label *ngIf="user">Class: &nbsp;<strong>{{user.class.name}}</strong></label>
+                                <label *ngIf="user && user.class">Class: &nbsp;<strong>{{user.class.name}}</strong></label>
                             </div>
                         </div>
 
