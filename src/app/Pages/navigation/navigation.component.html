@@ -26,7 +26,7 @@
                         <li class="eborder-top">
                             <a href="" [routerLink]="[profileRoute]"><i class="icon_profile"></i> My Profile</a>
                         </li>
-                         <li>
+                         <li *ngIf="loginPerson !='Admin'">
                             <a href="" [routerLink]="[chatRoute]"><i class="icon_mail_alt"></i> My Inbox</a>
                         </li> 
                         <li>

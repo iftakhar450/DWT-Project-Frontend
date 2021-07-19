@@ -13,7 +13,7 @@ export class SubjectComponent implements OnInit {
 
   newSubjectForm: FormGroup;
 
-  allSubject: any[];
+  allSubject: any[] ;
   allTeachers: any[];
   allClasses: any[];
   selectedSubject: any = {};
@@ -111,7 +111,12 @@ export class SubjectComponent implements OnInit {
   confirmDelete() {
     let url = environment.subjectDefault + '/' + this.selectedSubject._id
     this.mainService.delete(url).subscribe(res => {
-      this.app.showSuccess(res.msg);
+      if(res.code) {
+        this.app.showInfo(res.msg);
+      }else {
+        this.app.showSuccess(res.msg);
+      }
+
       this.deleteSubjectClosebutton.nativeElement.click();
       this.getAllSubject();
     }, error => {

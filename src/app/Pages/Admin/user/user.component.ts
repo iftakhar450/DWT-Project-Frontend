@@ -86,7 +86,12 @@ export class UserComponent implements OnInit {
   confirmDelete() {
     let url = environment.userDefault + '/' + this.selectedUser._id
     this.mainService.delete(url).subscribe(res => {
-      this.app.showSuccess(res.msg);
+      console.log(res)
+      if(res.code) {
+        this.app.showInfo(res.msg);
+      }else {
+        this.app.showSuccess(res.msg);
+      }
       this.deleteUserClosebutton.nativeElement.click();
       this.getAllUser();
     }, error => {

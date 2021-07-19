@@ -34,8 +34,8 @@
                         <tr *ngFor="let s of allSubject">
                             <td>{{s.title}}</td>
                             <td>{{s.s_id}}</td>
-                            <td>{{s.class.name}}</td>
-                            <td>{{s.teacher.name}}</td>
+                            <td> <span *ngIf="s.class">{{s.class.name}} </span></td>
+                            <td> <span *ngIf="s.teacher">{{s.teacher.name}} </span></td>
                             <td *ngIf="s.is_archive == 'n' || !s.is_archive">
                                 <button class="btn btn-info" style="width: 100px;" data-toggle="modal"
                                     data-target="#archiveSubjectConfirmModal"

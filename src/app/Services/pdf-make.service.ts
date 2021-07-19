@@ -3,12 +3,14 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import html2canvas from 'html2canvas';
+import { DatePipe } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
 export class PdfMakeService {
 
   pdfMake: any;
+   datePipe = new DatePipe("en-US");
   constructor() {
 
   }
@@ -21,7 +23,7 @@ export class PdfMakeService {
     return pm;
   }
 
-  async generatePdf(content, headerkeys) {
+  async generatePdf(info, content, headerkeys) {
 
     // let strings = new Base64Strings();
     const documentDefinition = {
@@ -38,6 +40,8 @@ export class PdfMakeService {
         text: 'Markscheet',
         width: 150,
         alignment: 'center',
+        style: 'headerHeading'
+
       },
       footer: [
         // {
@@ -59,18 +63,70 @@ export class PdfMakeService {
 
       ],
 
-      content: [
-        {
-          text: 'Print Date: ' + new Date(),
-          style: 'sectionHeader'
-        },
-        this.table(content, headerkeys)
+      content: [{
+        columns: [
+          {
+            text: 'Test:',
+            style: 'sectionHeader',
+            width: 70
+          },
+          {
+            text: info.name
+          }
+
+        ],
+      },
+      {
+        columns: [
+
+          {
+            text: 'Date: ' + '',
+            style: 'sectionHeader',
+            width: 70
+          },
+          {
+            text: this.datePipe.transform (info.date, 'dd.MM.yyyy HH:mm')
+          }
+
+        ],
+      },
+      {
+        columns: [
+          {
+            text: 'Subject: ' + '',
+            style: 'sectionHeader',
+            width: 70
+          },
+          {
+            text: info.subject.title + "(" + info.subject.s_id + ")"
+          }
+        ],
+      },
+
+      {
+        columns: [
+          {
+            text: 'Average: ' + '',
+            style: 'sectionHeader',
+            width: 70
+          },
+          {
+            text: info.average
+          }
+        ],
+      },
+      this.table(content, headerkeys)
       ],
       styles: {
         sectionHeader: {
           bold: true,
           decoration: 'underline',
           fontSize: 14,
+          margin: [0, 0, 0, 5]
+        },
+        headerHeading: {
+          bold: true,
+          fontSize: 20,
           margin: [0, 15, 0, 15]
         },
         footerHeading: {
@@ -100,7 +156,7 @@ export class PdfMakeService {
   binWidthOfColumns(columns) {
     let cols = ['*'];
     for (let i = 0; i < columns.length - 2; i++) {
-      cols.push('auto');
+      cols.push('*');
     }
     return cols;
   }

@@ -7,6 +7,7 @@ import { NgxCsvParser } from 'ngx-csv-parser';
 import { NgxCSVParserError } from 'ngx-csv-parser';
 import { AppComponent } from 'src/app/app.component';
 import { PdfMakeService } from 'src/app/Services/pdf-make.service';
+import { combineAll } from 'rxjs/operators';
 @Component({
   selector: 'app-test-markcheet',
   templateUrl: './test-markcheet.component.html',
@@ -67,7 +68,12 @@ export class TestMarkcheetComponent implements OnInit {
   }
 
   exportPDF() {
-    this.pdfmake.generatePdf(this.markSheet, Object.keys(this.markSheet[0]));
+    this.testInfo['average'] = this.getAverageForTest();
+    this.pdfmake.generatePdf(this.testInfo,this.markSheet, Object.keys(this.markSheet[0]));
+  }
+
+  getAverageForTest() {
+    return  this.markSheet.reduce((total, next) => total + next.result, 0) / this.markSheet.length;
   }
 
   // Your applications input change listener for the CSV File
